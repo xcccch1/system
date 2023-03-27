@@ -7,37 +7,19 @@
           :src="require('@/assets/logo.png')"
           fit="cover"
         ></el-image> -->
-        <p>后台管理系统</p>
+        <p class="title">后台管理系统</p>
       </div>
-      <el-form
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        ref="ruleForm"
-        class="demo-ruleForm"
-      >
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
         <el-form-item prop="username">
-          <el-input
-            placeholder="用户名"
-            prefix-icon="el-icon-user"
-            type="text"
-            v-model="ruleForm.username"
-            autocomplete="off"
-          ></el-input>
+          <el-input placeholder="用户名" prefix-icon="el-icon-user" type="text" v-model="ruleForm.username"
+            autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item prop="pass">
-          <el-input
-            placeholder="密码"
-            prefix-icon="el-icon-key"
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
+          <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" v-model="ruleForm.pass"
+            autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >登录</el-button
-          >
+          <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -56,7 +38,7 @@ export default {
         pass: "",
       },
       rules: {
-        username: [{ validator: this.validateUsername, trigger: "change"}],
+        username: [{ validator: this.validateUsername, trigger: "change" }],
         pass: [{ validator: this.validatePass, trigger: "change" }],
       },
     };
@@ -95,6 +77,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .login_container {
   display: flex;
   align-items: center;
@@ -104,18 +91,19 @@ export default {
   background-image: url("@/assets/logo.png");
   background-repeat: no-repeat;
   background-position: center;
+}
 
-  .loginbox {
-    width: 450px;
-    height: 300px;
-    background-color: #fff;
-    border-radius: 10px;
-    text-align: center;
-    box-sizing:border-box;
-    padding: 0 20px;
-    .logo {
-      margin-bottom: 10px;
-    }
-  }
+.loginbox {
+  width: 450px;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 30px;
+}
+
+.logo {
+  margin-bottom: 10px;
 }
 </style>

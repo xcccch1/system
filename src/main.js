@@ -4,6 +4,7 @@ import router from "@/router/index";
 import store from "@/store";
 import "@/style/normalize.css"
 import "@/style/global.css"
+import "@/style/global.less"
 import "@/mock/index"
 import "@/element/index"
 // import { Container, Header, Aside, Main } from "element-ui"
