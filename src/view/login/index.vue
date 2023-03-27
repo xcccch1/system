@@ -9,17 +9,35 @@
         ></el-image> -->
         <p class="title">后台管理系统</p>
       </div>
-      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+      <el-form
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        ref="ruleForm"
+        class="demo-ruleForm"
+      >
         <el-form-item prop="username">
-          <el-input placeholder="用户名" prefix-icon="el-icon-user" type="text" v-model="ruleForm.username"
-            autocomplete="off"></el-input>
+          <el-input
+            placeholder="用户名"
+            prefix-icon="el-icon-user"
+            type="text"
+            v-model="ruleForm.username"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="pass">
-          <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" v-model="ruleForm.pass"
-            autocomplete="off"></el-input>
+          <el-input
+            placeholder="密码"
+            prefix-icon="el-icon-key"
+            type="password"
+            v-model="ruleForm.pass"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+          <el-button type="primary" @click="submitForm('ruleForm')"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -87,10 +105,15 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: #2b4b6b;
-  background-image: url("@/assets/logo.png");
+  // background-color: #2b4b6b;
+  background-image: url("@/assets/img/login_background_img.jpg");
   background-repeat: no-repeat;
-  background-position: center;
+  background-size: cover;
+  background-position: center 0;
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
 }
 
 .loginbox {
@@ -101,6 +124,7 @@ export default {
   text-align: center;
   box-sizing: border-box;
   padding: 0 30px;
+  box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.5);
 }
 
 .logo {
