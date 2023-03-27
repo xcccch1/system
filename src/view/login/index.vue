@@ -2,11 +2,12 @@
   <div class="login_container">
     <div class="loginbox">
       <div class="logo">
-        <el-image
+        <!-- <el-image
           style="width: 100px; height: 100px"
           :src="require('@/assets/logo.png')"
           fit="cover"
-        ></el-image>
+        ></el-image> -->
+        <p>后台管理系统</p>
       </div>
       <el-form
         :model="ruleForm"
