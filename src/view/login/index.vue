@@ -1,45 +1,25 @@
 <template>
   <div class="login_container">
     <div class="loginbox">
-      <div class="logo">
-        <!-- <el-image
-          style="width: 100px; height: 100px"
-          :src="require('@/assets/logo.png')"
-          fit="cover"
-        ></el-image> -->
-        <p class="title">后台管理系统</p>
+      <div class="test">
+        <!-- <el-image :src="require('@/assets/img/loginbox_img.jpg')" fit="cover"></el-image> -->
       </div>
-      <el-form
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        ref="ruleForm"
-        class="demo-ruleForm"
-      >
-        <el-form-item prop="username">
-          <el-input
-            placeholder="用户名"
-            prefix-icon="el-icon-user"
-            type="text"
-            v-model="ruleForm.username"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="pass">
-          <el-input
-            placeholder="密码"
-            prefix-icon="el-icon-key"
-            type="password"
-            v-model="ruleForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')"
-            >登录</el-button
-          >
-        </el-form-item>
-      </el-form>
+      <div style="width: 50%;">
+        <h1 class="title">后台管理系统</h1>
+        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+          <el-form-item prop="username">
+            <el-input placeholder="用户名" prefix-icon="el-icon-user" type="text" v-model="ruleForm.username"
+              autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item prop="pass">
+            <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" v-model="ruleForm.pass"
+              autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
     </div>
   </div>
 </template>
@@ -101,9 +81,10 @@ export default {
 }
 
 .login_container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
   height: 100%;
   // background-color: #2b4b6b;
   background-image: url("@/assets/img/login_background_img.jpg");
@@ -117,17 +98,25 @@ export default {
 }
 
 .loginbox {
-  width: 450px;
-  height: 300px;
+  display: flex;
+  width: 900px;
+  height: 500px;
   background-color: #fff;
   border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
-  padding: 0 30px;
   box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  background-image: url(@/assets/img/login_background_img.jpg);
+  background-size: cover;
+  position: absolute;
+  left: 45%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.logo {
-  margin-bottom: 10px;
+.test {
+  flex: 1;
+
 }
 </style>
