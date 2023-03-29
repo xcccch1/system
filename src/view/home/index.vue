@@ -3,7 +3,6 @@
 </template>
   
 <script>
-import {getmessagesAPI} from '@/api/getmessages'
 
 export default {
   name: "Home",

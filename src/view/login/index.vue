@@ -1,31 +1,33 @@
 <template>
   <div class="login_container">
-    <div class="loginbox">
-      <div class="test">
-        <!-- <el-image :src="require('@/assets/img/loginbox_img.jpg')" fit="cover"></el-image> -->
+    <transition name="el-fade-in-linear">
+      <div class="loginbox" v-show="show">
+        <div style="flex: 1;">
+          <!-- <el-image :src="require('@/assets/img/loginbox_img.jpg')" fit="cover"></el-image> -->
+        </div>
+        <div class="loginform">
+          <h1 class="title">后台管理系统</h1>
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+            <el-form-item prop="username">
+              <el-input placeholder="用户名" prefix-icon="el-icon-user" type="text" v-model="ruleForm.username"
+                autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item prop="pass">
+              <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" v-model="ruleForm.pass"
+                autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
       </div>
-      <div style="width: 50%;">
-        <h1 class="title">后台管理系统</h1>
-        <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
-          <el-form-item prop="username">
-            <el-input placeholder="用户名" prefix-icon="el-icon-user" type="text" v-model="ruleForm.username"
-              autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item prop="pass">
-            <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" v-model="ruleForm.pass"
-              autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
-import { getmessagesAPI } from "@/api/getmessages";
+import { loginAPI } from "@/api/login";
 
 export default {
   name: "Login",
@@ -39,19 +41,24 @@ export default {
         username: [{ validator: this.validateUsername, trigger: "change" }],
         pass: [{ validator: this.validatePass, trigger: "change" }],
       },
+      show: false
     };
   },
-  async created() {
-    const res = await getmessagesAPI().catch((err) => {
-      console.log(err);
-    });
-    console.log(res);
-  },
+  async created() { },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          const logininfo = {
+            username:this.ruleForm.username,
+            password:this.ruleForm.pass
+          }
+          loginAPI(logininfo).then(res => {
+            console.log(res);
+          }).catch((err) => {
+            console.log(err);
+          });
+
         } else {
           return false;
         }
@@ -71,6 +78,9 @@ export default {
       callback();
     },
   },
+  mounted() {
+    this.show = true
+  },
 };
 </script>
 
@@ -81,10 +91,10 @@ export default {
 }
 
 .login_container {
-  position: relative;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+  // position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
   // background-color: #2b4b6b;
   background-image: url("@/assets/img/login_background_img.jpg");
@@ -102,7 +112,7 @@ export default {
   width: 900px;
   height: 500px;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 50px;
   text-align: center;
   box-sizing: border-box;
   box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.5);
@@ -113,10 +123,29 @@ export default {
   left: 45%;
   top: 50%;
   transform: translateY(-50%);
+  transition: all ease-in 0.5s;
 }
 
-.test {
-  flex: 1;
+.loginform {
+  width: 50%;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  padding: 0 50px;
 
+  h1 {
+    margin: 40px 0;
+  }
+}
+
+@media screen and(min-width: 1660px) {}
+
+@media screen and(max-width:1660px) {
+  .loginbox {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: all ease-out 0.5s;
+  }
 }
 </style>
