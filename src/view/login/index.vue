@@ -2,22 +2,42 @@
   <div class="login_container">
     <transition name="el-fade-in-linear">
       <div class="loginbox" v-show="show">
-        <div style="flex: 1;">
+        <div class="loginImg">
           <!-- <el-image :src="require('@/assets/img/loginbox_img.jpg')" fit="cover"></el-image> -->
         </div>
         <div class="loginform">
           <h1 class="title">后台管理系统</h1>
-          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
+          <el-form
+            :model="ruleForm"
+            status-icon
+            :rules="rules"
+            ref="ruleForm"
+            class="demo-ruleForm"
+          >
             <el-form-item prop="username">
-              <el-input placeholder="用户名" prefix-icon="el-icon-user" type="text" v-model="ruleForm.username"
-                autocomplete="off"></el-input>
+              <el-input
+                autofocus="true"
+                placeholder="用户名"
+                prefix-icon="el-icon-user"
+                type="text"
+                v-model="ruleForm.username"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
             <el-form-item prop="pass">
-              <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" v-model="ruleForm.pass"
-                autocomplete="off"></el-input>
+              <el-input
+                placeholder="密码"
+                prefix-icon="el-icon-key"
+                type="password"
+                :show-password="true"
+                v-model="ruleForm.pass"
+                autocomplete="off"
+              ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')"
+                >登录</el-button
+              >
             </el-form-item>
           </el-form>
         </div>
@@ -41,24 +61,25 @@ export default {
         username: [{ validator: this.validateUsername, trigger: "change" }],
         pass: [{ validator: this.validatePass, trigger: "change" }],
       },
-      show: false
+      show: false,
     };
   },
-  async created() { },
+  async created() {},
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           const logininfo = {
-            username:this.ruleForm.username,
-            password:this.ruleForm.pass
-          }
-          loginAPI(logininfo).then(res => {
-            console.log(res);
-          }).catch((err) => {
-            console.log(err);
-          });
-
+            username: this.ruleForm.username,
+            password: this.ruleForm.pass,
+          };
+          loginAPI(logininfo)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         } else {
           return false;
         }
@@ -79,7 +100,7 @@ export default {
     },
   },
   mounted() {
-    this.show = true
+    this.show = true;
   },
 };
 </script>
@@ -111,19 +132,24 @@ export default {
   display: flex;
   width: 900px;
   height: 500px;
-  background-color: #fff;
   border-radius: 50px;
   text-align: center;
   box-sizing: border-box;
   box-shadow: 5px 5px 15px 2px rgba(0, 0, 0, 0.5);
   overflow: hidden;
-  background-image: url(@/assets/img/login_background_img.jpg);
-  background-size: cover;
+  // background-image: url(@/assets/img/login_background_img.jpg);
+  // background-size: cover;
   position: absolute;
   left: 45%;
   top: 50%;
   transform: translateY(-50%);
   transition: all ease-in 0.5s;
+}
+
+.loginImg {
+  flex: 1;
+  background-image: url(@/assets/img/login_background_img.jpg);
+  background-size: cover;
 }
 
 .loginform {
@@ -132,13 +158,22 @@ export default {
   // flex-direction: column;
   // justify-content: center;
   padding: 0 50px;
+  background-color: #f0f8ff;
 
   h1 {
     margin: 40px 0;
   }
 }
 
-@media screen and(min-width: 1660px) {}
+.el-input /deep/ .el-input__inner {
+  height: 50px;
+  border-radius: 50px;
+  padding-left: 40px;
+}
+
+/deep/ .el-input__icon {
+  width: 40px;
+}
 
 @media screen and(max-width:1660px) {
   .loginbox {
@@ -146,6 +181,24 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     transition: all ease-out 0.5s;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .login_container{
+    background-position: -80px 0;
+    background-size: cover;
+  }
+  .loginbox{
+    width: 350px;
+  }
+  .loginform{
+    width: 100%;
+    background-color: rgba(237, 237, 237, 0.4);
+  }
+
+  .loginImg {
+    display: none;
   }
 }
 </style>
