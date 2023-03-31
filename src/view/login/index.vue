@@ -7,37 +7,17 @@
         </div>
         <div class="loginform">
           <h1 class="title">后台管理系统</h1>
-          <el-form
-            :model="ruleForm"
-            status-icon
-            :rules="rules"
-            ref="ruleForm"
-            class="demo-ruleForm"
-          >
+          <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm">
             <el-form-item prop="username">
-              <el-input
-                autofocus="true"
-                placeholder="用户名"
-                prefix-icon="el-icon-user"
-                type="text"
-                v-model="ruleForm.username"
-                autocomplete="off"
-              ></el-input>
+              <el-input autofocus="true" placeholder="用户名" prefix-icon="el-icon-user" type="text"
+                v-model="ruleForm.username" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item prop="pass">
-              <el-input
-                placeholder="密码"
-                prefix-icon="el-icon-key"
-                type="password"
-                :show-password="true"
-                v-model="ruleForm.pass"
-                autocomplete="off"
-              ></el-input>
+              <el-input placeholder="密码" prefix-icon="el-icon-key" type="password" :show-password="true"
+                v-model="ruleForm.pass" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')"
-                >登录</el-button
-              >
+              <el-button round plain type="primary" @click="submitForm('ruleForm')">登录</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -61,10 +41,10 @@ export default {
         username: [{ validator: this.validateUsername, trigger: "change" }],
         pass: [{ validator: this.validatePass, trigger: "change" }],
       },
-      show: false,
+      show: false
     };
   },
-  async created() {},
+  created() {},
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
@@ -74,11 +54,14 @@ export default {
             password: this.ruleForm.pass,
           };
           loginAPI(logininfo)
-            .then((res) => {
-              console.log(res);
+            .then((res) => {        
+              this.isLogin(res)
             })
             .catch((err) => {
-              console.log(err);
+              this.$message({
+                type:"error",
+                message:err.message
+              })
             });
         } else {
           return false;
@@ -98,6 +81,24 @@ export default {
       }
       callback();
     },
+    // 判断登录弹出消息
+    isLogin(res){
+      if(res.data.meta.status == 200){
+        sessionStorage.setItem("token",res.data.data.token)
+        this.$message({
+            type: 'success',
+            message: res.data.meta.msg
+          });
+        this.$router.push({
+          path:"/home"
+        })
+        }else{
+        this.$message({
+            type: 'error',
+            message: res.data.meta.msg
+          });
+      }
+    }
   },
   mounted() {
     this.show = true;
@@ -185,14 +186,16 @@ export default {
 }
 
 @media screen and (max-width: 500px) {
-  .login_container{
+  .login_container {
     background-position: -80px 0;
     background-size: cover;
   }
-  .loginbox{
+
+  .loginbox {
     width: 350px;
   }
-  .loginform{
+
+  .loginform {
     width: 100%;
     background-color: rgba(237, 237, 237, 0.4);
   }

@@ -7,7 +7,9 @@ const actions = {}
 
 const mutations = {}
 
-const state = {}
+const state = {
+    token: "" || sessionStorage.getItem("token")
+}
 
 const getters = {}
 

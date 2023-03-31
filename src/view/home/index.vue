@@ -1,5 +1,7 @@
 <template>
-  <div>home</div>
+  <div>
+    <button @click="push">go login</button>
+  </div>
 </template>
   
 <script>
@@ -11,6 +13,16 @@ export default {
   },
   created() {},
   methods: {
+    push(){
+      try {
+        this.$router.push({
+        path:"/login"
+      })
+      } catch (error) {
+        console.log(error);
+      }
+    
+    }
   }
 }
 </script>
