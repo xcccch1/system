@@ -1,8 +1,8 @@
 <template>
-  <el-container>
-    <el-header>Header</el-header>
+  <el-container style="flex-direction:column">
+    <Header></Header>
     <el-container style="height: calc(100vh - 60px);">
-      <el-aside width="200px">Aside</el-aside>
+      <Aside></Aside>
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -11,7 +11,14 @@
 </template>
 
 <script>
+import Header from "@/components/header.vue"
+import Aside from "@/components/aside.vue"
+
 export default {
+  components:{
+    Header,
+    Aside
+  },
   data() {
     return {};
   }

@@ -60,7 +60,7 @@ export default {
             .catch((err) => {
               this.$message({
                 type:"error",
-                message:err.message
+                message:err.message,
               })
             });
         } else {
@@ -87,7 +87,7 @@ export default {
         sessionStorage.setItem("token",res.data.data.token)
         this.$message({
             type: 'success',
-            message: res.data.meta.msg
+            message: res.data.meta.msg,
           });
         this.$router.push({
           path:"/home"

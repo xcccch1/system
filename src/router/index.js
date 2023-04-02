@@ -33,13 +33,12 @@ export default router
 
 router.beforeEach((to, from, next) => {
     if (to.path !== "/login") {
-        console.log(sessionStorage.getItem("token"));
         if (sessionStorage.getItem("token") !== null) {
             next()
         } else {
             next("/login")
         }
-    }else{
+    } else {
         next()
     }
 })
