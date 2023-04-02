@@ -17,7 +17,7 @@
             <el-dropdown-item v-for="item in menuList" :key="item.id">
               <el-image
                 style="width: 40px; height: 40px"
-                :src="require(item.path)"
+                :src="item.path"
                 fit="fit"
               ></el-image>
               <span>{{item.text}}</span>
