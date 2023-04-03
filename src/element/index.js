@@ -18,7 +18,9 @@ import {
     Submenu,
     MenuItem,
     Tooltip,
-    Drawer
+    Drawer,
+    Collapse,
+    CollapseItem
 } from "element-ui"
 
 
@@ -41,3 +43,5 @@ Vue.use(MenuItem)
 Vue.use(Submenu)
 Vue.use(Tooltip)
 Vue.use(Drawer)
+Vue.use(Collapse)
+Vue.use(CollapseItem)

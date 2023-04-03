@@ -5,12 +5,11 @@ const request = axios.create({
     timeout: 20000
 })
 
-// request.interceptors.request.use(config =>{
-//     config.headers["Content-Type"] = "application/json;charset=utf-8"
-//     const token = localStorage.getItem("token")?localStorage.getItem("token") :"";
-//     config.headers.Authorization = token;
-//     console.log(config);
-//     return config;
-// })
+request.interceptors.request.use(config =>{
+    config.headers["Content-Type"] = "application/json;charset=utf-8"
+    const token = sessionStorage.getItem("token")?sessionStorage.getItem("token") :"";
+    config.headers.Authorization = token;
+    return config;
+})
 
 export default request
