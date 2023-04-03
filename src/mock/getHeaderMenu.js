@@ -9,6 +9,6 @@ const messagesList = {
     ]
 }
 
-export function getMenu() {
+export function getHeaderMenu() {
     return messagesList.data
 }

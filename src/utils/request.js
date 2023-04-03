@@ -5,9 +5,8 @@ const request = axios.create({
     timeout: 20000
 })
 
-request.interceptors.request.use(config =>{
-    config.headers["Content-Type"] = "application/json;charset=utf-8"
-    const token = sessionStorage.getItem("token")?sessionStorage.getItem("token") :"";
+request.interceptors.request.use(config => {
+    const token = sessionStorage.getItem("token") ? sessionStorage.getItem("token") : "";
     config.headers.Authorization = token;
     return config;
 })

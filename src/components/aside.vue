@@ -1,52 +1,39 @@
 <template>
-  <el-aside width="10vw">
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-      <el-radio-button :label="false">展开</el-radio-button>
-      <el-radio-button :label="true">收起</el-radio-button>
-    </el-radio-group>
-    <el-menu class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose"
-      :collapse="isCollapse">
-      <el-submenu index="1">
+  <el-aside width="13vw">
+    <el-menu @open="handleOpen" @close="handleClose" active-text-color="#3370ff" unique-opened :collapse="isCollapse" :collapse-transition="false">
+      <el-submenu :index="item.id+''" v-for="item in menu" :key="item.id">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">导航一</span>
+          <i :class="iconobj[item.id]"></i>
+          <span>{{item.authName}}</span>
         </template>
         <el-menu-item-group>
-          <span slot="title">分组一</span>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
+          <el-menu-item :index="secendMenu.id+''" v-for="secendMenu in item.children" :key="secendMenu.id">{{secendMenu.authName}}</el-menu-item>
         </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">选项4</span>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
+      <el-submenu index="8" @click="a(this.isCollapse)">
+         <template slot="title">
+          <i :class="isCollapse?'el-icon-s-unfold':'el-icon-s-fold'"></i>
+        </template>
+      </el-submenu>
     </el-menu>
   </el-aside>
 </template>
 
 <script>
+import {getMenuAPI} from "@/api/aside"
 export default {
   name: "Aside",
   data() {
     return {
+      menu:[],
+      iconobj:{},
       isCollapse: true
     }
+  },
+  async created(){
+    const {data:menu} = await getMenuAPI()
+    this.menu = menu.data
+    this.iconobj = this.icon(menu.data)
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -54,6 +41,14 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    icon(menu){
+      const iconobj = {}
+      const iconArr = ["el-icon-user-solid","el-icon-s-check","el-icon-s-goods","el-icon-s-order","el-icon-s-marketing"]
+      menu.forEach((item,index) => {
+        iconobj[item.id+''] = iconArr[index]
+      });
+      return iconobj
     }
   }
 }
@@ -62,9 +57,24 @@ export default {
 <style lang="less" scoped>
 .el-aside {
   padding: 10px;
+  background-color:#f2f3f5;
 }
-// .el-menu-vertical-demo:not(.el-menu--collapse) {
-//     width: 200px;
-//     min-height: 400px;
-//   }
+
+/deep/ .el-menu{
+  overflow: hidden;
+  background-color:#f2f3f5;
+  border: none;
+}
+
+/deep/ .el-menu-item-group__title{
+  display: none;
+}
+
+/deep/ .el-menu-item:hover {
+  background-color: rgba(31,35,41,.08);
+}
+
+/deep/ .el-submenu__title:hover{
+  background-color:rgba(31,35,41,.08) ;
+}
 </style>

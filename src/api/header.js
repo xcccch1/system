@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
-export const getMenuAPI = () => {
+export const getHeaderMenuAPI = () => {
     return request({
-        url: "/getMenuList"
+        url: "/getHeaderMenuList"
     })
 }

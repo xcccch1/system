@@ -1,9 +1,9 @@
 import Mock from "mockjs";
 import { getmessages } from "./messages";
-import { getMenu } from "@/mock/getMenu"
+import { getHeaderMenu } from "@/mock/getHeaderMenu"
 
 // 
 Mock.mock(/\/getmessages/, "get", getmessages)
 
 // header
-Mock.mock(/\/getMenuList/, "get", getMenu)
+Mock.mock(/\/getHeaderMenuList/, "get", getHeaderMenu)

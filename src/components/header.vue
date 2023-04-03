@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { getMenuAPI } from "@/api/header";
+import { getHeaderMenuAPI } from "@/api/header";
 
 export default {
   nmae: "Header",
@@ -95,7 +95,7 @@ export default {
     };
   },
   async mounted() {
-    const { data: menu } = await getMenuAPI();
+    const { data: menu } = await getHeaderMenuAPI();
     // this.menuList = menu;
     this.menuList = menu
   },
