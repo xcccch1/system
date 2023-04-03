@@ -20,7 +20,10 @@ import {
     Tooltip,
     Drawer,
     Collapse,
-    CollapseItem
+    CollapseItem,
+    RadioGroup,
+    RadioButton,
+    MenuItemGroup
 } from "element-ui"
 
 
@@ -45,3 +48,6 @@ Vue.use(Tooltip)
 Vue.use(Drawer)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
+Vue.use(RadioGroup)
+Vue.use(RadioButton)
+Vue.use(MenuItemGroup)

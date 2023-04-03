@@ -7,7 +7,9 @@
       </router-link>
     </div>
     <div class="right">
-      <div class="box"></div>
+      <div class="box">
+        <i class="el-icon-s-tools"></i>
+      </div>
       <div class="box">
         <el-dropdown trigger="click" class="menu">
           <span class="el-dropdown-link">
@@ -293,4 +295,5 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-}</style>
+}
+</style>
