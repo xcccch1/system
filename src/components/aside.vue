@@ -1,7 +1,7 @@
 <template>
-  <el-aside :width="isCollapse ? 'fit-content' : '10vw'">
-    <el-menu @open="handleOpen" @close="handleClose" active-text-color="#3370ff" unique-opened :collapse="isCollapse"
-      :collapse-transition="true">
+  <el-aside :width="$store.state.isCollapse ? 'fit-content' : '10vw'">
+    <el-menu @open="handleOpen" @close="handleClose" active-text-color="#3370ff" unique-opened
+      :collapse="$store.state.isCollapse" :collapse-transition="true">
       <el-submenu :index="item.id + ''" v-for="item in menu" :key="item.id">
         <template slot="title">
           <i :class="iconobj[item.id]"></i>
@@ -12,13 +12,14 @@
             secendMenu.authName }}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="8" @click.native="isCollapse = !isCollapse">
+      <el-submenu index="8" @click.native="changeIsCollapse">
         <template slot="title">
-          <i :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
+          <i :class="$store.state.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
         </template>
       </el-submenu>
     </el-menu>
     {{ screenWidth }}
+    {{ $store.state.isCollapse }}
   </el-aside>
 </template>
 
@@ -30,10 +31,9 @@ export default {
     return {
       menu: [],
       iconobj: {},
-      isCollapse: true,
       iconArr: ["el-icon-user-solid", "el-icon-s-check", "el-icon-s-goods", "el-icon-s-order", "el-icon-s-marketing"],
-      screenWidth: "",
-      screenHeight: ""
+      screenWidth: null,
+      screenHeight: null
     }
   },
   async created() {
@@ -65,6 +65,20 @@ export default {
         iconobj[item.id + ''] = this.iconArr[index]
       });
       return iconobj
+    },
+    changeIsCollapse() {
+      this.$store.commit("CHANGEISCOLLAPSE")
+    }
+  },
+  watch: {
+    screenWidth:{
+      handler(val){
+        if(val < 2000){
+          this.$store.commit("CHANGEISCOLLAPSE",true)
+        }else{
+          this.$store.commit("CHANGEISCOLLAPSE",false)
+        }
+      }
     }
   }
 }

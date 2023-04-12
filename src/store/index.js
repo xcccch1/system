@@ -5,10 +5,19 @@ Vue.use(Vuex)
 
 const actions = {}
 
-const mutations = {}
+const mutations = {
+    CHANGEISCOLLAPSE(state,value){
+        console.log(value);
+        if(value !== undefined){
+            state.isCollapse = value
+        }
+        state.isCollapse = !state.isCollapse
+    }
+}
 
 const state = {
-    token: "" || sessionStorage.getItem("token")
+    token: "" || sessionStorage.getItem("token"),
+    isCollapse:true
 }
 
 const getters = {}
