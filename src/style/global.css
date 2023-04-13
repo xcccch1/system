@@ -18,3 +18,21 @@ a {
     text-decoration: none;
     outline: none;
 }
+
+@media screen and ( max-width: 460px) {
+    .right{
+      margin: 0 5px;
+    }
+    .box{
+      display: none;
+    }
+  
+    .info{
+      margin: 0;
+      padding: 0;
+    }
+
+    .Collapse{
+        display: none;
+    }
+  }

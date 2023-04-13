@@ -7,7 +7,6 @@ const actions = {}
 
 const mutations = {
     CHANGEISCOLLAPSE(state,value){
-        console.log(value);
         if(value !== undefined){
             state.isCollapse = value
         }

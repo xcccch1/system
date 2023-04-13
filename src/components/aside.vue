@@ -1,7 +1,11 @@
 <template>
-  <el-aside :width="$store.state.isCollapse ? 'fit-content' : '10vw'">
-    <el-menu @open="handleOpen" @close="handleClose" active-text-color="#3370ff" unique-opened
-      :collapse="$store.state.isCollapse" :collapse-transition="true">
+  <el-aside :width="$store.state.isCollapse ? '88px' : '10vw'">
+    <el-menu @open="handleOpen" @close="handleClose" active-text-color="#3370ff" unique-opened default-active="2"
+      :collapse="$store.state.isCollapse" :collapse-transition="false">
+      <el-menu-item index="2">
+        <i class="el-icon-s-home"></i>
+        <span slot="title">首页</span>
+      </el-menu-item>
       <el-submenu :index="item.id + ''" v-for="item in menu" :key="item.id">
         <template slot="title">
           <i :class="iconobj[item.id]"></i>
@@ -12,14 +16,12 @@
             secendMenu.authName }}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-submenu index="8" @click.native="changeIsCollapse">
-        <template slot="title">
-          <i :class="$store.state.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
-        </template>
-      </el-submenu>
+      <el-menu-item index="8" @click.native="changeIsCollapse" class="Collapse">
+        <i :class="$store.state.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
+      </el-menu-item>
     </el-menu>
-    {{ screenWidth }}
-    {{ $store.state.isCollapse }}
+    <!-- {{ screenWidth }}
+    {{ $store.state.isCollapse }} -->
   </el-aside>
 </template>
 
@@ -71,12 +73,12 @@ export default {
     }
   },
   watch: {
-    screenWidth:{
-      handler(val){
-        if(val < 2000){
-          this.$store.commit("CHANGEISCOLLAPSE",true)
-        }else{
-          this.$store.commit("CHANGEISCOLLAPSE",false)
+    screenWidth: {
+      handler(val) {
+        if (val < 2000) {
+          this.$store.commit("CHANGEISCOLLAPSE", false)
+        } else {
+          this.$store.commit("CHANGEISCOLLAPSE", true)
         }
       }
     }
@@ -86,8 +88,14 @@ export default {
 
 <style lang="less" scoped>
 .el-aside {
+  min-width: 87.16px;
   padding: 10px;
   background-color: #f2f3f5;
+  transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  -moz-transition: width 0.5s;
+  -webkit-transition: width 0.5s;
+  -o-transition: width 0.5s;
 }
 
 /deep/ .el-menu {
