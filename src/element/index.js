@@ -23,7 +23,10 @@ import {
     CollapseItem,
     RadioGroup,
     RadioButton,
-    MenuItemGroup
+    MenuItemGroup,
+    Breadcrumb,
+    BreadcrumbItem,
+    Card
 } from "element-ui"
 
 
@@ -51,3 +54,6 @@ Vue.use(CollapseItem)
 Vue.use(RadioGroup)
 Vue.use(RadioButton)
 Vue.use(MenuItemGroup)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Card)
