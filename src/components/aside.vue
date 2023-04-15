@@ -65,6 +65,7 @@ export default {
     const { data: menu } = await getMenuAPI();
     this.menu = menu.data;
     this.iconobj = this.icon(menu.data);
+    console.log(this.$route.path);
   },
   mounted() {
     this.screenWidth = document.body.clientWidth;
@@ -97,7 +98,7 @@ export default {
   watch: {
     screenWidth: {
       handler(val) {
-        if (val < 2000) {
+        if (val < 1500) {
           this.$store.commit("CHANGEISCOLLAPSE", false);
         } else {
           this.$store.commit("CHANGEISCOLLAPSE", true);
