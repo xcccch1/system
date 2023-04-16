@@ -11,7 +11,8 @@ Vue.use(VueRouter)
 const routes = [{
         name: "Login",
         path: "/login",
-        component: Login
+        component: Login,
+        meta: { breadcrumb: "登录页" }
     },
     {
         name: "Layout",
@@ -19,8 +20,8 @@ const routes = [{
         component: Layout,
         redirect: "home",
         children: [
-            { name: "Home", path: "home", component: Home },
-            { name: "Users", path: "users", component: Users }
+            { name: "Home", path: "home", component: Home, meta: { breadcrumb: "首页" } },
+            { name: "Users", path: "users", component: Users, meta: { breadcrumb: "用户列表" } }
         ]
     }
 ]

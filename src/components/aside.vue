@@ -65,7 +65,6 @@ export default {
     const { data: menu } = await getMenuAPI();
     this.menu = menu.data;
     this.iconobj = this.icon(menu.data);
-    console.log(this.$route.path);
   },
   mounted() {
     this.screenWidth = document.body.clientWidth;

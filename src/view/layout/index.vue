@@ -4,12 +4,7 @@
     <el-container style="height: calc(100vh - 60px)">
       <Aside></Aside>
       <el-main>
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
+        <Breadcrumb></Breadcrumb>
         <el-card style="height: calc(100% - 20px);">
           <router-view></router-view>
         </el-card>
@@ -21,15 +16,22 @@
 <script>
 import Header from "@/components/header.vue";
 import Aside from "@/components/aside.vue";
+import Breadcrumb  from "@/components/breadcrumb.vue"
 
 export default {
   components: {
     Header,
     Aside,
+    Breadcrumb
   },
   data() {
-    return {};
+    return {
+    
+    };
   },
+  created(){
+  },
+  methods:{}
 };
 </script>
 
@@ -54,7 +56,4 @@ body > .el-container {
   margin-bottom: 40px;
 }
 
-.el-breadcrumb{
-  margin-bottom: 5px;
-}
 </style>
