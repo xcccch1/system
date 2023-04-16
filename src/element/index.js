@@ -26,7 +26,16 @@ import {
     MenuItemGroup,
     Breadcrumb,
     BreadcrumbItem,
-    Card
+    Card,
+    Col,
+    Row,
+    Table,
+    TableColumn,
+    MessageBox,
+    Dialog,
+    Select,
+    Option,
+    Pagination
 } from "element-ui"
 
 
@@ -57,3 +66,12 @@ Vue.use(MenuItemGroup)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Card)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.use(Dialog)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Pagination)

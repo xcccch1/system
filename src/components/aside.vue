@@ -29,7 +29,7 @@
           </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item @click.native="changeIsCollapse" class="Collapse">
+      <el-menu-item index="" @click.native="changeIsCollapse" class="Collapse">
         <i
           :class="
             $store.state.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'
