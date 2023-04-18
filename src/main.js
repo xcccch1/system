@@ -7,6 +7,9 @@ import "@/style/global.css"
 import "@/style/global.less"
 import "@/mock/index"
 import "@/element/index"
+import echarts from "@/echarts/index";
+Vue.prototype.$echarts = echarts
+
 Vue.config.productionTip = false
 
 new Vue({
