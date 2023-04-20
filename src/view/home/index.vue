@@ -1,12 +1,15 @@
 <template>
   <div>
+    <div class="container">
+      <div class="box"><img src="@/assets/logo.png" style="width: 100%;height: 100%;" alt=""></div>
+    </div>
     <el-row :gutter="20">
       <div style="height: 200px;">
-        <el-col :span="18">
+        <el-col :span="17">
           <div ref="main" style="height: 400px;background-color: #e9eef3;">
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="7">
           <div ref="radio" style="height: 400px;background-color: #e9eef3;padding: 20px;"></div>
         </el-col>
       </div>
@@ -19,9 +22,9 @@
 </template>
   
 <script>
-import {mainoption} from "@/echarts/main"
-import {radiooption} from "@/echarts/radio"
-import {getGoodsAPI} from "@/api/home"
+import { mainoption } from "@/echarts/main"
+import { radiooption } from "@/echarts/radio"
+import { getGoodsAPI } from "@/api/home"
 
 export default {
   name: "Home",
@@ -47,6 +50,30 @@ export default {
 </script>
   
 <style lang="less" scoped>
+
+.container{
+  width: 200px;
+  height: 200px;
+  position: relative;
+  top: 20px;
+  perspective: 700px;
+  transform-style: preserve-3d;
+}
+.box {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  transition: all 0.5s;
+  transform-origin:right bottom ;
+}
+.box:hover{
+  // transform: rotateY(-30deg);
+  // transform: rotateX(15deg);
+  // transform: skew(-10deg,-5deg); 
+  // transform: skewY(-10deg);
+  transform: rotate3d(0.5,2,1,-30deg);
+  // transform: rotateX(10deg);
+}
 .el-row {
   margin-bottom: 20px;
 

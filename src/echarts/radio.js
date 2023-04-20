@@ -9,7 +9,7 @@ export const radiooption = {
         formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
     legend: {
-        right: 'right',
+        top: 'bottom',
         data: [
             'rose1',
             'rose2',
