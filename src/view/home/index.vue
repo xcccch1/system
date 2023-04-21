@@ -1,30 +1,48 @@
 <template>
   <div>
-    <div class="container">
-      <div class="box"><img src="@/assets/logo.png" style="width: 100%;height: 100%;" alt=""></div>
-    </div>
-    <el-row :gutter="20">
-      <div style="height: 200px;">
-        <el-col :span="17">
-          <div ref="main" style="height: 400px;background-color: #e9eef3;">
-          </div>
+    <el-row type="flex" class="row-bg" align="middle">
+      <el-row>
+        <el-col :span="6">
+          <div class="grid-content bg-purple"></div>
         </el-col>
-        <el-col :span="7">
-          <div ref="radio" style="height: 400px;background-color: #e9eef3;padding: 20px;"></div>
-        </el-col>
-      </div>
-    </el-row>
-    <el-row>
-      <el-col>
+      </el-row>
+      <el-col :span="6">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple-light"></div>
       </el-col>
     </el-row>
+    <!-- <el-row type="flex" class="row-bg" justify="space-around">
+      <el-col :span="10">
+        <div class="grid-content bg-purple" ></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple-light"></div>
+      </el-col>
+      <el-col :span="6">
+        <div class="grid-content bg-purple"></div>
+      </el-col>
+    </el-row>
+    <el-row type="flex" class="row-bg" justify="space-around">
+      <el-col :span="16">
+        <div ref="main" style="height: 400px;background-color: #e9eef3;"></div>
+      </el-col>
+      <el-col :span="7">
+        <div ref="radio" style="height: 400px;background-color: #e9eef3;padding: 20px;"></div>
+      </el-col>
+    </el-row>
+    <el-row type="flex" class="row-bg" justify="space-around">
+    </el-row> -->
+    <!-- <div class="container">
+      <div class="box"><img src="@/assets/logo.png" style="width: 100%;height: 100%;" alt=""></div>
+    </div> -->
   </div>
 </template>
   
 <script>
-import { mainoption } from "@/echarts/main"
-import { radiooption } from "@/echarts/radio"
-import { getGoodsAPI } from "@/api/home"
+import { mainoption, radiooption } from "@/echarts/home.js"
+
 
 export default {
   name: "Home",
@@ -50,8 +68,7 @@ export default {
 </script>
   
 <style lang="less" scoped>
-
-.container{
+.container {
   width: 200px;
   height: 200px;
   position: relative;
@@ -59,23 +76,27 @@ export default {
   perspective: 700px;
   transform-style: preserve-3d;
 }
+
 .box {
   position: absolute;
   width: 200px;
   height: 200px;
   transition: all 0.5s;
-  transform-origin:right bottom ;
+  // transform-origin:bottom  ;
 }
-.box:hover{
+
+.box:hover {
   // transform: rotateY(-30deg);
-  // transform: rotateX(15deg);
+  transform: rotateX(40deg);
   // transform: skew(-10deg,-5deg); 
-  // transform: skewY(-10deg);
-  transform: rotate3d(0.5,2,1,-30deg);
+  // transform: skewY(-10deg);  
+  // transform: rotate3d(0.5,2,1,-30deg);
   // transform: rotateX(10deg);
 }
+
 .el-row {
   margin-bottom: 20px;
+  height: 400px;
 
   &:last-child {
     margin-bottom: 0;

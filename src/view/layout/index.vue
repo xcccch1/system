@@ -1,5 +1,6 @@
 <template>
-  <el-container style="flex-direction: column">
+  
+    <el-container style="flex-direction: column">
     <Header></Header>
     <el-container style="height: calc(100vh - 60px)">
       <Aside></Aside>
@@ -36,6 +37,8 @@ export default {
 </script>
 
 <style>
+
+
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
