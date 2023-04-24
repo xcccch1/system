@@ -1,6 +1,5 @@
 <template>
-  
-    <el-container style="flex-direction: column">
+  <el-container style="flex-direction: column">
     <Header></Header>
     <el-container style="height: calc(100vh - 60px)">
       <Aside></Aside>
@@ -17,7 +16,7 @@
 <script>
 import Header from "@/components/header.vue";
 import Aside from "@/components/aside.vue";
-import Breadcrumb  from "@/components/breadcrumb.vue"
+import Breadcrumb from "@/components/breadcrumb.vue"
 
 export default {
   components: {
@@ -27,18 +26,16 @@ export default {
   },
   data() {
     return {
-    
+
     };
   },
-  created(){
+  created() {
   },
-  methods:{}
+  methods: {}
 };
 </script>
 
 <style>
-
-
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
@@ -55,8 +52,7 @@ export default {
   color: #333;
 }
 
-body > .el-container {
+body>.el-container {
   margin-bottom: 40px;
 }
-
 </style>

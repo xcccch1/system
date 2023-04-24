@@ -1,42 +1,22 @@
 <template>
   <div>
-    <el-row type="flex" class="row-bg" align="middle">
-      <el-row>
-        <el-col :span="6">
-          <div class="grid-content bg-purple"></div>
-        </el-col>
-      </el-row>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
+    <el-row type="flex" class="row-bg" justify="space-between" style="height: 200px;">
+      <el-col :span="5">
+        <div style="background-color: #e9eef3;padding: 20px;">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-xinxi"></use>
+          </svg>
+        </div>
       </el-col>
     </el-row>
-    <!-- <el-row type="flex" class="row-bg" justify="space-around">
-      <el-col :span="10">
-        <div class="grid-content bg-purple" ></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple-light"></div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-    </el-row>
-    <el-row type="flex" class="row-bg" justify="space-around">
+    <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
       <el-col :span="16">
-        <div ref="main" style="height: 400px;background-color: #e9eef3;"></div>
+        <div ref="main" style="background-color: #e9eef3;padding: 20px;"></div>
       </el-col>
       <el-col :span="7">
-        <div ref="radio" style="height: 400px;background-color: #e9eef3;padding: 20px;"></div>
+        <div ref="radio" style="background-color: #e9eef3;padding: 20px;"></div>
       </el-col>
     </el-row>
-    <el-row type="flex" class="row-bg" justify="space-around">
-    </el-row> -->
-    <!-- <div class="container">
-      <div class="box"><img src="@/assets/logo.png" style="width: 100%;height: 100%;" alt=""></div>
-    </div> -->
   </div>
 </template>
   
@@ -68,6 +48,10 @@ export default {
 </script>
   
 <style lang="less" scoped>
+div {
+  height: 100%;
+}
+
 .container {
   width: 200px;
   height: 200px;
@@ -96,7 +80,6 @@ export default {
 
 .el-row {
   margin-bottom: 20px;
-  height: 400px;
 
   &:last-child {
     margin-bottom: 0;

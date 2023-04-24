@@ -7,6 +7,7 @@ import "@/style/global.css"
 import "@/style/global.less"
 import "@/mock/index"
 import "@/element/index"
+import "@/js/iconfont"
 import echarts from "@/echarts/index";
 Vue.prototype.$echarts = echarts
 
