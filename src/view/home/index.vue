@@ -1,20 +1,34 @@
 <template>
   <div>
-    <el-row type="flex" class="row-bg" justify="space-between" style="height: 200px;">
-      <el-col :span="5">
-        <div style="background-color: #e9eef3;padding: 20px;">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-xinxi"></use>
+    <!-- 4个盒子 -->
+    <el-row type="flex" class="row-bg tablist" justify="space-between">
+      <el-col :span="5" class="tablist-item" v-for="(item,index) in tablist" :key="index">
+        <div>
+          <svg class="icon" aria-hidden="true" style="font-size: 108px;">
+            <use :xlink:href="item.icon"></use>
           </svg>
+        </div>
+        <div>
+          <h2 style="margin: 0;color: rgba(0,0,0,.45);">{{ item.title }}</h2>
+          <span style="font-size: 20px;font-weight: 600;">{{item.number}}</span>
         </div>
       </el-col>
     </el-row>
     <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
       <el-col :span="16">
-        <div ref="main" style="background-color: #e9eef3;padding: 20px;"></div>
+        <div class="box"></div>
       </el-col>
       <el-col :span="7">
-        <div ref="radio" style="background-color: #e9eef3;padding: 20px;"></div>
+        <div class="box"></div>
+      </el-col>
+    </el-row>
+    <!-- 底部echart -->
+    <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
+      <el-col :span="16">
+        <div ref="main" class="box"></div>
+      </el-col>
+      <el-col :span="7">
+        <div ref="radio" class="box"></div>
       </el-col>
     </el-row>
   </div>
@@ -22,16 +36,22 @@
   
 <script>
 import { mainoption, radiooption } from "@/echarts/home.js"
-
+import { getTabListAPI } from "@/api/home";
 
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+      tablist:[]
+    };
   },
   async created() {
+    const {data:res} = await getTabListAPI()
+    this.tablist = res
   },
-  mounted() { this.mainecharts() },
+  mounted() {
+     this.mainecharts()
+  },
   methods: {
     mainecharts() {
       const mainechart = this.$echarts.init(this.$refs.main)
@@ -43,39 +63,48 @@ export default {
         radioechart.resize()
       });
     }
+    // a(b){
+    //   let num = b.toString()
+    //   const newnum =  num.split('')
+    //   newnum.forEach((element,index)=>{
+    //     console.log(element);
+    //     // if(index%3 == 0){
+    //     //   num = newnum.splice(index-1,0,",")
+    //     // }
+    //   })
+    // }
   }
 }
 </script>
   
 <style lang="less" scoped>
-div {
-  height: 100%;
-}
-
-.container {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  top: 20px;
-  perspective: 700px;
-  transform-style: preserve-3d;
-}
-
 .box {
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  transition: all 0.5s;
-  // transform-origin:bottom  ;
+  height: 100%;
+  background-color: #e9eef3;
+  padding: 20px;
+  // border-radius: 20px;
 }
 
-.box:hover {
-  // transform: rotateY(-30deg);
-  transform: rotateX(40deg);
-  // transform: skew(-10deg,-5deg); 
-  // transform: skewY(-10deg);  
-  // transform: rotate3d(0.5,2,1,-30deg);
-  // transform: rotateX(10deg);
+.tablist {
+  height: 200px;
+}
+
+.tablist-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e9eef3;
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.5s;
+  & div{
+    height: fit-content;
+  }
+  &:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    cursor: pointer;
+  }
 }
 
 .el-row {
@@ -87,19 +116,7 @@ div {
 }
 
 .el-col {
-  border-radius: 4px;
-}
-
-.bg-purple-dark {
-  background: #99a9bf;
-}
-
-.bg-purple {
-  background: #d3dce6;
-}
-
-.bg-purple-light {
-  background: #e5e9f2;
+  border-radius: 20px;
 }
 
 .grid-content {
@@ -107,9 +124,9 @@ div {
   min-height: 36px;
 }
 
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-}
+// .row-bg {
+//   padding: 10px 0;
+//   background-color: #f9fafc;
+// }
 </style>
   

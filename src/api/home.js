@@ -5,3 +5,9 @@ export const getGoodsAPI = (data)=>{
         url:`/goods?query=${data.query}&pagenum=${data.pagenum}&pagesize=${data.pagesize}`
     })
 }
+
+export const getTabListAPI = ()=>{
+    return request({
+        url:'/getTabList'
+    })
+}
