@@ -2,35 +2,35 @@
   <div>
     <!-- 4个盒子 -->
     <el-row type="flex" class="row-bg tablist" justify="space-between">
-      <el-col :span="5" class="tablist-item" v-for="(item,index) in tablist" :key="index">
-        <div>
-          <svg class="icon" aria-hidden="true" style="font-size: 108px;">
+      <el-col :span="5" class="tablist-item" v-for="(item, index) in tablist" :key="index">
+          <svg class="icon" aria-hidden="true" style="font-size: 8rem;">
             <use :xlink:href="item.icon"></use>
           </svg>
-        </div>
         <div>
           <h2 style="margin: 0;color: rgba(0,0,0,.45);">{{ item.title }}</h2>
-          <span style="font-size: 20px;font-weight: 600;">{{item.number}}</span>
+          <span style="font-size: 20px;font-weight: 600;">{{ initNum(item.number) }}</span>
         </div>
       </el-col>
     </el-row>
-    <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
-      <el-col :span="16">
-        <div class="box"></div>
-      </el-col>
-      <el-col :span="7">
-        <div class="box"></div>
-      </el-col>
-    </el-row>
-    <!-- 底部echart -->
-    <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
-      <el-col :span="16">
-        <div ref="main" class="box"></div>
-      </el-col>
-      <el-col :span="7">
-        <div ref="radio" class="box"></div>
-      </el-col>
-    </el-row>
+    <div style="display: flex; flex-direction: column;">
+      <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
+        <el-col :span="16">
+          <div class="box"></div>
+        </el-col>
+        <el-col :span="7">
+          <div class="box"></div>
+        </el-col>
+      </el-row>
+      <!-- 底部echart -->
+      <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
+        <el-col :span="16">
+          <div ref="main" class="box"></div>
+        </el-col>
+        <el-col :span="7">
+          <div ref="radio" class="box"></div>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
   
@@ -42,15 +42,15 @@ export default {
   name: "Home",
   data() {
     return {
-      tablist:[]
+      tablist: []
     };
   },
   async created() {
-    const {data:res} = await getTabListAPI()
+    const { data: res } = await getTabListAPI()
     this.tablist = res
   },
   mounted() {
-     this.mainecharts()
+    this.mainecharts()
   },
   methods: {
     mainecharts() {
@@ -62,17 +62,22 @@ export default {
         mainechart.resize();
         radioechart.resize()
       });
+    },
+    initNum(num){
+      if(typeof(num) !== "number") return
+      let newArr = []
+      const numArr = num.toString().split('').reverse()
+      numArr.forEach((item,index)=>{
+        if(index%3-1 == -1 & index!==0){
+          newArr.push(",")
+          newArr.push(item)
+        } else{
+          newArr.push(item)
+        }
+      })
+      const result = newArr.reverse().join("")
+      return result
     }
-    // a(b){
-    //   let num = b.toString()
-    //   const newnum =  num.split('')
-    //   newnum.forEach((element,index)=>{
-    //     console.log(element);
-    //     // if(index%3 == 0){
-    //     //   num = newnum.splice(index-1,0,",")
-    //     // }
-    //   })
-    // }
   }
 }
 </script>
@@ -86,10 +91,10 @@ export default {
 }
 
 .tablist {
-  height: 200px;
+  height: 150px;
 }
 
-.tablist-item{
+.tablist-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -97,12 +102,14 @@ export default {
   border-radius: 20px;
   padding: 20px;
   transition: all 0.5s;
-  & div{
+
+  & div {
     height: fit-content;
   }
-  &:hover{
+
+  &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
     cursor: pointer;
   }
 }

@@ -13,9 +13,9 @@ const tablist = [
         icon:"#icon-jifen"
     }),
     Mock.mock({
-        title:"Message",
+        title:"Interest",
         "number|10000-20000": 100,
-        icon:"#icon-xinxi"
+        icon:"#icon-guanzhu"
     }),
     Mock.mock({
         title:"More",

@@ -1,4 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 module.exports = defineConfig({
     transpileDependencies: true,
     lintOnSave: false,
@@ -13,6 +14,7 @@ module.exports = defineConfig({
     },
     configureWebpack: (config) => {
         if (process.env.NODE_ENV === 'production') {// 为生产环境修改配置...
+          config.plugins.push(new BundleAnalyzerPlugin())
           config.mode = 'production';
           config["performance"] = {//打包文件大小配置
             "maxEntrypointSize": 10000000,
