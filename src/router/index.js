@@ -4,6 +4,8 @@ import Home from "@/view/home"
 import Login from "@/view/login"
 import Layout from "@/view/layout"
 import Users from "@/view/users"
+import Roles from "@/components/power/roles.vue"
+import Rights from "@/components/power/rights.vue"
 
 Vue.use(VueRouter)
 
@@ -21,7 +23,10 @@ const routes = [{
         redirect: "home",
         children: [
             { name: "Home", path: "home", component: Home, meta: { breadcrumb: "首页" } },
-            { name: "Users", path: "users", component: Users, meta: { breadcrumb: "用户列表" } }
+            { name: "Users", path: "users", component: Users, meta: { breadcrumb: "用户列表" } },
+            { name: "Roles", path: "roles", component: Roles, meta: { breadcrumb: "角色列表" } },
+            { name: "Rights", path: "rights", component: Rights, meta: { breadcrumb: "权限列表" } },
+
         ]
     }
 ]

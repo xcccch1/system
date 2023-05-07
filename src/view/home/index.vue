@@ -2,18 +2,32 @@
   <div>
     <!-- 4个盒子 -->
     <el-row type="flex" class="row-bg tablist" justify="space-between">
-      <el-col :span="5" class="tablist-item" v-for="(item, index) in tablist" :key="index">
-          <svg class="icon" aria-hidden="true" style="font-size: 8rem;">
-            <use :xlink:href="item.icon"></use>
-          </svg>
+      <el-col
+        :span="5"
+        class="tablist-item"
+        v-for="(item, index) in tablist"
+        :key="index"
+      >
+        <svg class="icon" aria-hidden="true" style="font-size: 5rem">
+          <use :xlink:href="item.icon"></use>
+        </svg>
         <div>
-          <h2 style="margin: 0;color: rgba(0,0,0,.45);">{{ item.title }}</h2>
-          <span style="font-size: 20px;font-weight: 600;">{{ initNum(item.number) }}</span>
+          <h2 style="margin: 0; color: rgba(0, 0, 0, 0.45)">
+            {{ item.title }}
+          </h2>
+          <span style="font-size: 20px; font-weight: 600">{{
+            initNum(item.number)
+          }}</span>
         </div>
       </el-col>
     </el-row>
-    <div style="display: flex; flex-direction: column;">
-      <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
+    <div style="display: flex; flex-direction: column; height: 80%">
+      <el-row
+        type="flex"
+        class="row-bg"
+        justify="space-between"
+        style="height: 50%"
+      >
         <el-col :span="16">
           <div class="box"></div>
         </el-col>
@@ -22,7 +36,12 @@
         </el-col>
       </el-row>
       <!-- 底部echart -->
-      <el-row type="flex" class="row-bg" justify="space-between" style="height: 400px;">
+      <el-row
+        type="flex"
+        class="row-bg"
+        justify="space-between"
+        style="height: 50%"
+      >
         <el-col :span="16">
           <div ref="main" class="box"></div>
         </el-col>
@@ -35,54 +54,65 @@
 </template>
   
 <script>
-import { mainoption, radiooption } from "@/echarts/home.js"
+import { mainoption, radiooption } from "@/echarts/home.js";
 import { getTabListAPI } from "@/api/home";
 
 export default {
   name: "Home",
   data() {
     return {
-      tablist: []
+      tablist: [],
     };
   },
   async created() {
-    const { data: res } = await getTabListAPI()
-    this.tablist = res
+    const { data: res } = await getTabListAPI();
+    this.tablist = res;
   },
   mounted() {
-    this.mainecharts()
+    this.echarts();
+  },
+  beforeDestroy() {
+    // 在组件销毁前解绑resize事件
+    // window.removeEventListener("resize", ()=>{
+    //   this.mainecharts
+    // });
   },
   methods: {
-    mainecharts() {
-      const mainechart = this.$echarts.init(this.$refs.main)
-      const radioechart = this.$echarts.init(this.$refs.radio)
-      mainechart.setOption(mainoption)
-      radioechart.setOption(radiooption)
+    echarts() {
+      const mainechart = this.$echarts.init(this.$refs.main);
+      const radioechart = this.$echarts.init(this.$refs.radio);
+      mainechart.setOption(mainoption);
+      radioechart.setOption(radiooption);
       window.addEventListener("resize", function () {
         mainechart.resize();
-        radioechart.resize()
+        radioechart.resize();
       });
     },
-    initNum(num){
-      if(typeof(num) !== "number") return
-      let newArr = []
-      const numArr = num.toString().split('').reverse()
-      numArr.forEach((item,index)=>{
-        if(index%3-1 == -1 & index!==0){
-          newArr.push(",")
-          newArr.push(item)
-        } else{
-          newArr.push(item)
+    initNum(num) {
+      if (typeof num !== "number") return;
+      let newArr = [];
+      const numArr = num.toString().split("").reverse();
+      numArr.forEach((item, index) => {
+        if (((index % 3) - 1 == -1) & (index !== 0)) {
+          newArr.push(",");
+          newArr.push(item);
+        } else {
+          newArr.push(item);
         }
-      })
-      const result = newArr.reverse().join("")
-      return result
-    }
-  }
-}
+      });
+      const result = newArr.reverse().join("");
+      return result;
+    },
+  },
+};
 </script>
   
 <style lang="less" scoped>
+.test {
+  width: 100%;
+  height: 33%;
+  background-color: aqua;
+}
 .box {
   height: 100%;
   background-color: #e9eef3;
@@ -91,7 +121,8 @@ export default {
 }
 
 .tablist {
-  height: 150px;
+  height: 18%;
+  min-height: 105px;
 }
 
 .tablist-item {
@@ -102,6 +133,7 @@ export default {
   border-radius: 20px;
   padding: 20px;
   transition: all 0.5s;
+  min-width: 275px;
 
   & div {
     height: fit-content;
@@ -109,7 +141,7 @@ export default {
 
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
 }
@@ -124,11 +156,6 @@ export default {
 
 .el-col {
   border-radius: 20px;
-}
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
 }
 
 // .row-bg {

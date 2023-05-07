@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" >
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
@@ -54,5 +54,13 @@ export default {
 
 body>.el-container {
   margin-bottom: 40px;
+}
+
+.el-card__body{
+  height: 100%;
+  min-width: 1320px;
+  &>div{
+    height: 100%;
+  }
 }
 </style>

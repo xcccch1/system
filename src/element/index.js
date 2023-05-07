@@ -35,7 +35,8 @@ import {
     Dialog,
     Select,
     Option,
-    Pagination
+    Pagination,
+    Tag
 } from "element-ui"
 
 
@@ -75,3 +76,4 @@ Vue.use(Dialog)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Pagination)
+Vue.use(Tag)
