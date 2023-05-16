@@ -15,21 +15,21 @@
           <el-button
             type="primary"
             plain
-            @click.native.prevent="changeuser(scope.row.id, userlist)"
+            @click.native.prevent="changepower(scope.row.id, roleList)"
             size="small"
             icon="el-icon-edit"
           ></el-button>
           <el-button
             type="danger"
             plain
-            @click.native.prevent="removeuser(scope.row.id, userlist)"
+            @click.native.prevent="removeuser(scope.row.id, roleList)"
             size="small"
             icon="el-icon-delete-solid"
           ></el-button>
           <el-button
             type="warning"
             plain
-            @click.native.prevent="removeuser(scope.row.id, userlist)"
+            @click.native.prevent="removeuser(scope.row.id, roleList)"
             size="small"
             icon="el-icon-s-tools"
           ></el-button>
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       roleList: [],
-      isshow:false
+      isshow:false,
     };
   },
   components:{
@@ -62,12 +62,17 @@ export default {
     async getRolesList() {
       const { data: res } = await getRolesListAPI();
       this.roleList = res.data;
+      console.log(res);
     },
     showdialog(){
       this.isshow = true
     },
     closedialog(){
       this.isshow = false
+    },
+    async changepower(id,b) {
+      this.isshow = true;
+      console.log(b);
     }
   },
 };

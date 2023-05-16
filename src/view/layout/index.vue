@@ -59,6 +59,7 @@ body>.el-container {
 .el-card__body{
   height: 100%;
   min-width: 1320px;
+  min-height: 960px;
   &>div{
     height: 100%;
   }

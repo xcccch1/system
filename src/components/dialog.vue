@@ -1,22 +1,14 @@
 <template>
   <div>
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" @close="closedialog" :close-on-click-modal="false" :close-on-press-escape="false">
-      <el-form :model="form">
-        <el-form-item label="活动名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域" :label-width="formLabelWidth">
-          <el-select v-model="form.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
+    <el-dialog title="添加角色" :visible.sync="dialogFormVisible" @close="resetform">
+      <el-form :model="form" :rules="rules" ref="ruleform">
+        <el-form-item label="角色名称" :label-width="formLabelWidth" prop="username">
+          <el-input type="text" v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="closedialog">取 消</el-button>
-        <el-button type="primary" @click="closedialog"
-          >确 定</el-button
-        >
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm('ruleform')">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -24,48 +16,60 @@
 
 <script>
 export default {
-    name:"Dialog",
-    props:["dialogFormVisible"],
-    data() {
-      return {
-        gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        // dialogFormVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-        formLabelWidth: '120px',
-      };
-    },
-    methods:{
-      closedialog(){
-        this.$emit('close',false)
-      }
+  name: "Dialog",
+  props: ["dialogFormVisible"],
+  data() {
+    return {
+      form: {
+        username: "",
+        password: "",
+        checkpassword: "",
+        email: "",
+        phonenumber: "",
+      },
+      rules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+        ],
+        password: [
+          { required: true, validator: this.validatePass, trigger: "blur" },
+        ],
+        checkpassword: [
+          { required: true, validator: this.validatePass2, trigger: "blur" },
+        ],
+      },
+      formLabelWidth: "120px"
     }
+  },
+  methods: {
+    closedialog() {
+      this.$emit('close', false)
+    },
+    // 重置表单
+    resetform() {
+      this.$refs.ruleform.resetFields();
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          const { data: res } = await addUserAPI(this.form);
+          this.$message.success(res.meta.msg);
+          this.dialogFormVisible = false;
+          this.clear();
+        } else {
+          this.$message.error("请填写正确信息!");
+          return false;
+        }
+      });
+    },
+    // 修改用户信息
+    async changeuser(id) {
+      const { data: res } = await searchuserAPI(id);
+      this.editform = res.data;
+      this.dialogFormVisible2 = true;
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>
