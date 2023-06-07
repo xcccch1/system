@@ -8,9 +8,52 @@
     <el-table :data="roleList" border stripe style="width: 100%">
       <el-table-column type="expand" label="">
         <template slot-scope="scope">
-          <pre>
-            {{ scope.row }} 
-          </pre>
+          <el-row
+            :class="['bdbottom', index == 0 ? 'bdtop' : '', 'vcenter']"
+            v-for="(item, index) in scope.row.children"
+            :key="item.id"
+          >
+            <!-- 一级权限 -->
+            <el-col :span="5">
+              <el-tag
+                :closable="true"
+                @close="removeById(scope.row, item.id)"
+                >{{ item.authName }}</el-tag
+              >
+              <i class="el-icon-caret-right"></i>
+            </el-col>
+            <!-- 二级权限 -->
+            <el-col :span="19">
+              <el-row
+                :class="[index1 == 0 ? '' : 'bdtop', 'vcenter']"
+                v-for="(item1, index1) in item.children"
+                :key="item1.id"
+              >
+                <el-col :span="6">
+                  <el-tag
+                    type="success"
+                    :closable="true"
+                    @close="removeById(scope.row, item1.id)"
+                    >{{ item1.authName }}</el-tag
+                  >
+                  <i class="el-icon-caret-right"></i>
+                </el-col>
+                <el-col :span="18">
+                  <el-row v-for="item2 in item1.children" :key="item2.id">
+                    <el-col :span="24">
+                      <el-tag
+                        type="warning"
+                        :closable="true"
+                        @close="removeById(scope.row, item2.id)"
+                        >{{ item2.authName }}</el-tag
+                      >
+                      <i class="el-icon-caret-right"></i>
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+            </el-col>
+          </el-row>
         </template>
       </el-table-column>
       <el-table-column type="index" label="#"> </el-table-column>
@@ -35,7 +78,7 @@
           <el-button
             type="warning"
             plain
-            @click.native.prevent="changepower(scope.row.id, roleList)"
+            @click.native.prevent="setright(scope.row.id, roleList)"
             size="small"
             icon="el-icon-s-tools"
           ></el-button>
@@ -56,7 +99,7 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="角色名称" label-width="120px" prop="roledes">
+        <el-form-item label="角色描述" label-width="120px" prop="roledes">
           <el-input
             type="text"
             v-model="addroleform.roledes"
@@ -96,7 +139,23 @@
         >
       </div>
     </el-dialog>
-    <!-- 编辑 -->
+    <el-dialog title="分配角色权限" :visible.sync="setrightishow">
+      <div class="test">
+        <el-tree
+          :data="roleList"
+          show-checkbox
+          node-key="id"
+          :props="defaultProps"
+        >
+        </el-tree>
+      </div>
+      <div slot="footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false"
+          >确 定</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -107,17 +166,24 @@ import {
   removeroleAPI,
   searchroleAPI,
   changeroleAPI,
+  removeRoleRightAPI,
 } from "@/api/roles";
 
 export default {
   name: "Roles",
   data() {
     return {
+      // 角色列表
       roleList: [],
       addroleisshow: false,
       changeroleisshow: false,
+      setrightishow: false,
       addroleform: {},
       changeroleform: {},
+      defaultProps: {
+          children: 'children',
+          label: 'autho'
+        }
     };
   },
   created() {
@@ -181,9 +247,57 @@ export default {
     resetaddroleform() {
       this.$refs.addroleform.resetFields();
     },
+    // 移除标签
+    async removeById(role, rightid) {
+      const confirmresult = await this.$confirm(
+        "此操作将移除该角色权限, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((e) => e);
+      if (confirmresult !== "confirm") return;
+      const { data: res } = await removeRoleRightAPI(role.id, rightid);
+      if (res.meta.status !== 200) return this.$message.error("移除权限失败!");
+      this.$message.success("移除成功");
+      role.children = res.data;
+    },
+    // 打开分配角色弹框
+    setright() {
+      this.setrightishow = true;
+    },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.el-tag {
+  margin: 7px;
+}
+
+.bdtop {
+  border-top: 1px solid #eee;
+}
+
+.bdbottom {
+  border-bottom: 1px solid #eee;
+}
+
+.vcenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.test {
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+  border-radius: 4px;
+  border: 1px solid #ebeef5;
+  background-color: #fff;
+  overflow: hidden;
+  color: #303133;
+  transition: 0.3s;
+}
 </style>

@@ -36,7 +36,8 @@ import {
     Select,
     Option,
     Pagination,
-    Tag
+    Tag,
+    Tree
 } from "element-ui"
 
 
@@ -77,3 +78,4 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Pagination)
 Vue.use(Tag)
+Vue.use(Tree)

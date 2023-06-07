@@ -39,3 +39,11 @@ export const changeroleAPI = (id, data) => {
         data
     })
 }
+
+// 删除指定角色权限
+export const removeRoleRightAPI = (role, rightid) => {
+    return request({
+        method: 'delete',
+        url: "roles/" + role.id + "/rights/" + rightid
+    })
+}
