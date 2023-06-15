@@ -41,9 +41,20 @@ export const changeroleAPI = (id, data) => {
 }
 
 // 删除指定角色权限
-export const removeRoleRightAPI = (role, rightid) => {
+export const removeRoleRightAPI = (roleid, rightid) => {
     return request({
         method: 'delete',
-        url: "roles/" + role.id + "/rights/" + rightid
+        url: "roles/" + roleid + "/rights/" + rightid
+    })
+}
+
+// 角色授权
+export const allotRightAPI = (roleid, idStr) => {
+    return request({
+        method: "post",
+        url: `roles/${roleid}/rights`,
+        data: {
+            rids: idStr
+        }
     })
 }

@@ -64,21 +64,21 @@
           <el-button
             type="primary"
             plain
-            @click.native.prevent="changerole(scope.row.id, roleList)"
+            @click.native.prevent="changerole(scope.row.id)"
             size="small"
             icon="el-icon-edit"
           ></el-button>
           <el-button
             type="danger"
             plain
-            @click.native.prevent="removerole(scope.row.id, roleList)"
+            @click.native.prevent="removerole(scope.row.id)"
             size="small"
             icon="el-icon-delete-solid"
           ></el-button>
           <el-button
             type="warning"
             plain
-            @click.native.prevent="setright(scope.row, roleList)"
+            @click.native.prevent="setright(scope.row)"
             size="small"
             icon="el-icon-s-tools"
           ></el-button>
@@ -139,7 +139,12 @@
         >
       </div>
     </el-dialog>
-    <el-dialog title="分配角色权限" :visible.sync="setrightishow">
+    <!-- 分配角色权限 -->
+    <el-dialog
+      title="分配角色权限"
+      :visible.sync="setrightishow"
+      @close="setRightDialogClosed"
+    >
       <div class="test">
         <el-tree
           :data="rightlist"
@@ -147,13 +152,14 @@
           node-key="id"
           :props="defaultProps"
           accordion
-          :default-checked-keys="[101,106]"
+          :default-checked-keys="defkeys"
+          ref="treeRef"
         >
         </el-tree>
       </div>
       <div slot="footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false"
+        <el-button @click="setrightishow = false">取 消</el-button>
+        <el-button type="primary" @click="allotRights"
           >确 定</el-button
         >
       </div>
@@ -169,9 +175,9 @@ import {
   searchroleAPI,
   changeroleAPI,
   removeRoleRightAPI,
+  allotRightAPI
 } from "@/api/roles";
 import { getRightListAPI } from "@/api/rights";
-
 
 export default {
   name: "Roles",
@@ -187,16 +193,19 @@ export default {
       addroleform: {},
       changeroleform: {},
       defaultProps: {
-          children: 'children',
-          label: 'authName'
-        },
-      rightlist:[]
+        children: "children",
+        label: "authName",
+      },
+      // 权限列表
+      rightlist: [],
+      // 所有三级权限id
+      defkeys: [],
+      // 当前需修改权限角色id
+      roleid:""
     };
   },
-  async created() {
+  created() {
     this.getRolesList();
-    const {data:res} = await getRightListAPI("tree")
-    this.rightlist = res.data
   },
   methods: {
     // 获取角色列表
@@ -279,14 +288,46 @@ export default {
       ).catch((e) => e);
       if (confirmresult !== "confirm") return;
       const { data: res } = await removeRoleRightAPI(role.id, rightid);
-      if (res.meta.status !== 200) return this.$message.error("移除权限失败!");
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg);
       this.$message.success("移除成功");
       role.children = res.data;
     },
     // 打开分配角色弹框
-    setright(a,b) {
+    async setright(role) {
+      this.roleid = role.id
+      const { data: res } = await getRightListAPI("tree");
+      if (res.meta.status !== 200) return this.$message.error("获取权限数据失败");
+      this.rightlist = res.data;
+      // 递归默认勾选的节点
+      this.getLeafKeys(role, this.defkeys);
       this.setrightishow = true;
     },
+    //通过递归获取角色下所有三级权限id
+    getLeafKeys(node, arr) {
+      if (!node.children) {
+        return arr.push(node.id);
+      }
+      node.children.forEach((item) => {
+        this.getLeafKeys(item, arr);
+      });
+    },
+    // 分配角色对话框关闭事件
+    setRightDialogClosed() {
+      this.defkeys = [];
+    },
+    // 确认分配权限
+    async allotRights(){
+      const keys = [
+        ...this.$refs.treeRef.getCheckedKeys(),
+        ...this.$refs.treeRef.getHalfCheckedKeys()
+      ]
+      const idStr = keys.join(",");
+      const {data:res} = await allotRightAPI(this.roleid,idStr)
+      res.meta.status == 200? this.$message.success("添加权限成功"):this.$message.error("添加权限失败")
+      this.getRolesList()
+      this.setrightishow = false
+      
+    }
   },
 };
 </script>
