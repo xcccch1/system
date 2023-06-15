@@ -1,7 +1,7 @@
 import request from "@/utils/request";
 
-export const getRightListAPI = () => {
+export const getRightListAPI = (type="list") => {
     return request({
-        url: "rights/list"
+        url: `rights/${type}`
     })
 }

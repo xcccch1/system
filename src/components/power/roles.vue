@@ -78,7 +78,7 @@
           <el-button
             type="warning"
             plain
-            @click.native.prevent="setright(scope.row.id, roleList)"
+            @click.native.prevent="setright(scope.row, roleList)"
             size="small"
             icon="el-icon-s-tools"
           ></el-button>
@@ -142,10 +142,12 @@
     <el-dialog title="分配角色权限" :visible.sync="setrightishow">
       <div class="test">
         <el-tree
-          :data="roleList"
+          :data="rightlist"
           show-checkbox
           node-key="id"
           :props="defaultProps"
+          accordion
+          :default-checked-keys="[101,106]"
         >
         </el-tree>
       </div>
@@ -168,6 +170,8 @@ import {
   changeroleAPI,
   removeRoleRightAPI,
 } from "@/api/roles";
+import { getRightListAPI } from "@/api/rights";
+
 
 export default {
   name: "Roles",
@@ -175,19 +179,24 @@ export default {
     return {
       // 角色列表
       roleList: [],
+      // 各弹出框表单的显示
       addroleisshow: false,
       changeroleisshow: false,
       setrightishow: false,
+      // 各表单数据
       addroleform: {},
       changeroleform: {},
       defaultProps: {
           children: 'children',
-          label: 'autho'
-        }
+          label: 'authName'
+        },
+      rightlist:[]
     };
   },
-  created() {
+  async created() {
     this.getRolesList();
+    const {data:res} = await getRightListAPI("tree")
+    this.rightlist = res.data
   },
   methods: {
     // 获取角色列表
@@ -237,6 +246,16 @@ export default {
     },
     // 删除角色
     async removerole(id) {
+      const confirmresult = await this.$confirm(
+        "此操作将删除该角色, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "error",
+        }
+      ).catch((e) => e);
+      if (confirmresult !== "confirm") return;
       const { data: res } = await removeroleAPI(id);
       res.meta.status == 200
         ? this.$message.success("删除角色成功")
@@ -265,7 +284,7 @@ export default {
       role.children = res.data;
     },
     // 打开分配角色弹框
-    setright() {
+    setright(a,b) {
       this.setrightishow = true;
     },
   },
