@@ -115,7 +115,7 @@ export default {
 }
 .box {
   height: 100%;
-  background-color: #e9eef3;
+  background-color: #f2f3f5;
   padding: 20px;
   // border-radius: 20px;
 }
@@ -129,7 +129,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e9eef3;
+  background-color: #f2f3f5;
   border-radius: 20px;
   padding: 20px;
   transition: all 0.5s;
