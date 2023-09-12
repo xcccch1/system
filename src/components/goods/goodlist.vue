@@ -2,12 +2,16 @@
     <div>
         <div class="upload">
             <div class="text">上传文件</div>
-            <input type="file" @change="File" multiple >
+            <input ref="uploadinput" type="file" @change="File" @drop.stop="test" multiple >
         </div>
+        <el-button type="" @click="$refs.uploadinput.click()">
+            上传文件
+        </el-button>
     </div>
 </template>
 
 <script>
+import { postfile } from '@/api/upload';
 
 export default{
     name:"Goods",
@@ -18,7 +22,14 @@ export default{
     methods: {
         File(e){
             const files = e.target.files
-            console.log(files);
+            // console.log(files);
+        },
+        test(e){
+            
+            console.log(e.target.files);
+        },
+        upload(){
+            console.log();
         }
     },
 }
