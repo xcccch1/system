@@ -1,7 +1,8 @@
 import axios from "axios"
 
 const request = axios.create({
-    baseURL: "proxy",
+    // baseURL: "proxy",
+    baseURL:"http://node.xcccch1.top/api/private/v1/",
     timeout: 20000
 })
 

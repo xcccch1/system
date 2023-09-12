@@ -54,7 +54,7 @@ export default {
             password: this.ruleForm.pass,
           };
           loginAPI(logininfo)
-            .then((res) => {        
+            .then((res) => {    
               this.isLogin(res)
             })
             .catch((err) => {
