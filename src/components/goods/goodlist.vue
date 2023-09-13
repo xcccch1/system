@@ -2,7 +2,7 @@
     <div>
         <div class="upload">
             <div class="text">上传文件</div>
-            <input ref="uploadinput" type="file" @change="File" @drop.stop="test" multiple >
+            <input ref="uploadinput" type="file" @change="upload" @dragenter.prevent="dragenter" @dragover.prevent="dragover" @drop.prevent="drop" webkitdirectory mozdirectory odirectory  multiple >
         </div>
         <el-button type="" @click="$refs.uploadinput.click()">
             上传文件
@@ -20,16 +20,27 @@ export default{
         }
     },
     methods: {
-        File(e){
-            const files = e.target.files
-            // console.log(files);
+        upload(e){
+            console.log(e);
         },
-        test(e){
-            
-            console.log(e.target.files);
+        dragenter(e){
+            console.log(e);
         },
-        upload(){
-            console.log();
+        dragover(e){
+            console.log(e);
+        },
+        drop(e){
+            // const res = await postfile("e.dataTransfer.files[0]")
+            // console.log(res);
+            console.log(e.dataTransfer.items);
+            for (const itemfile of e.dataTransfer.items){
+                itemfile.webkitGetAsEntry().file(async f=>{
+                    console.log(f);
+                    const res = await postfile(f)
+                    console.log(res);
+                });
+            }
+            // console.log(e.dataTransfer.files);
         }
     },
 }

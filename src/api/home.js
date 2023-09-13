@@ -11,3 +11,9 @@ export const getTabListAPI = ()=>{
         url:'/getTabList'
     })
 }
+
+export const getEchartOptionAPI = ()=>{
+    return request({
+        url:"/getEchartOption"
+    })
+}

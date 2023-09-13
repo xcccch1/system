@@ -1,9 +1,11 @@
 import request from "@/utils/request";
 
-export const postfile = filename =>{
+export const postfile = file =>{
     return request({
         method:"post",
         url:"upload",
-        data:filename
+        data:{
+            file
+        }
     })
 }

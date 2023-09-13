@@ -43,7 +43,7 @@
         style="height: 50%"
       >
         <el-col :span="16">
-          <div ref="main" class="box"></div>
+          <div ref="bar" class="box"></div>
         </el-col>
         <el-col :span="7">
           <div ref="radio" class="box"></div>
@@ -55,13 +55,14 @@
   
 <script>
 import { mainoption, radiooption } from "@/echarts/home.js";
-import { getTabListAPI } from "@/api/home";
+import { getTabListAPI,getEchartOptionAPI } from "@/api/home";
 
 export default {
   name: "Home",
   data() {
     return {
       tablist: [],
+      echartOption:{}
     };
   },
   async created() {
@@ -69,22 +70,24 @@ export default {
     this.tablist = res;
   },
   mounted() {
-    this.echarts();
+    this.echarts()
   },
   beforeDestroy() {
     // 在组件销毁前解绑resize事件
     // window.removeEventListener("resize", ()=>{
-    //   this.mainecharts
+    //   this.barecharts
     // });
   },
   methods: {
-    echarts() {
-      const mainechart = this.$echarts.init(this.$refs.main);
+    async echarts() {
+      const {data:option} = await getEchartOptionAPI();
+      console.log(option);
+      const barechart = this.$echarts.init(this.$refs.bar);
       const radioechart = this.$echarts.init(this.$refs.radio);
-      mainechart.setOption(mainoption);
-      radioechart.setOption(radiooption);
+      barechart.setOption(option.barOption);
+      radioechart.setOption(option.radioOption);
       window.addEventListener("resize", function () {
-        mainechart.resize();
+        barechart.resize();
         radioechart.resize();
       });
     },
