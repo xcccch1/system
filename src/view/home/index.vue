@@ -54,7 +54,7 @@
 </template>
   
 <script>
-import { mainoption, radiooption } from "@/echarts/home.js";
+import { baroption, radiooption } from "@/echarts/home.js";
 import { getTabListAPI,getEchartOptionAPI } from "@/api/home";
 
 export default {
@@ -62,7 +62,6 @@ export default {
   data() {
     return {
       tablist: [],
-      echartOption:{}
     };
   },
   async created() {
@@ -80,17 +79,29 @@ export default {
   },
   methods: {
     async echarts() {
-      const {data:option} = await getEchartOptionAPI();
-      console.log(option);
+      const {data:data} = await getEchartOptionAPI();
       const barechart = this.$echarts.init(this.$refs.bar);
       const radioechart = this.$echarts.init(this.$refs.radio);
-      barechart.setOption(option.barOption);
-      radioechart.setOption(option.radioOption);
+      // 处理图形数据
+      const nameArr = []
+      const valarr = []  
+      data.forEach(item =>{
+        nameArr.push(item.name)
+        valarr.push(item.value)
+      })
+      baroption.xAxis.data = nameArr
+      baroption.series[0].data = valarr
+      baroption.series[1].data = valarr
+      radiooption.legend.data= nameArr
+      radiooption.series.data=data
+      barechart.setOption(baroption);
+      radioechart.setOption(radiooption);
       window.addEventListener("resize", function () {
         barechart.resize();
         radioechart.resize();
       });
     },
+    // 数字处理
     initNum(num) {
       if (typeof num !== "number") return;
       let newArr = [];
